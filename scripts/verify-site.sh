@@ -72,7 +72,8 @@ check_dist() {
 
 check_url() {
   local base=${1%/} nodomain=${2:-}
-  local tmp; tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
+  # tmp глобальная: EXIT-trap срабатывает после выхода из функции, local к этому моменту уже нет
+  tmp=$(mktemp -d); trap 'rm -rf "${tmp:-}"' EXIT
   for p in / /cv/ /projects/ /notes/; do
     code=$(curl -s -m 20 -o "$tmp/page.html" -w '%{http_code}' "$base$p")
     if [ "$code" = 200 ]; then ok "$p → 200 (сертификат принят)"; scan "$tmp/page.html" "$p"; else bad "$p → $code"; fi
