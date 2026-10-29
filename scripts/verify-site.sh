@@ -20,16 +20,17 @@ text = html.unescape(re.sub(r'<[^>]+>', ' ', re.sub(r'<(script|style)[^>]*>.*?</
 errs = []
 if re.search(r'<script[^>]*\ssrc="https?:', raw): errs.append('внешний <script src>')
 if re.search(r'googletagmanager|mc\.yandex|metrika|gtag\(', raw): errs.append('трекер')
-if re.search(r'(\+7|\b8|tel:7)[ (-]*9[0-9]{2}[) -]*[0-9]{3}[ -]?[0-9]{2}[ -]?[0-9]{2}', text): errs.append('номер телефона по шаблону')
+phone_rx = r'(\+7|\b8|tel:\+?7)[ (-]*9[0-9]{2}[) -]*[0-9]{3}[ -]?[0-9]{2}[ -]?[0-9]{2}'
+if re.search(phone_rx, text) or re.search(phone_rx, raw): errs.append('номер телефона по шаблону')
 if re.search(r'85\.90\.208|185\.211\.170|80\.90\.191|aqstream\.ru|\b10810\b|\b2096\b|3x-ui|vless', raw, re.I): errs.append('инфраструктура VPN')
 if re.search(r'@neoflex\.ru', raw, re.I): errs.append('рабочая почта')
-if re.search(r'Возраст\s*:', text): errs.append('возраст')
+if re.search(r'Возраст\s*:|\b\d{2}\s*(год|года|лет)\b', text): errs.append('возраст')
 if os.path.exists(cv):
     src = open(cv, encoding='utf-8', errors='replace').read()
     m = re.search(r'\\phone\{([^}]*)\}', src)
     if m:
         tail = re.sub(r'\D', '', m.group(1))[-7:]
-        if len(tail) == 7 and tail in re.sub(r'\D', '', text): errs.append('хвост реального телефона из CV')
+        if len(tail) == 7 and (tail in re.sub(r'\D', '', text) or tail in re.sub(r'\D', '', raw)): errs.append('хвост реального телефона из CV')
     m = re.search(r'\\email\{([^}]*)\}', src)
     if m and m.group(1).strip().lower() in raw.lower(): errs.append('личная почта из CV')
 elif os.environ.get('CI'):
@@ -71,7 +72,7 @@ check_dist() {
 
 check_url() {
   local base=${1%/} nodomain=${2:-}
-  local tmp; tmp=$(mktemp -d)
+  local tmp; tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
   for p in / /cv/ /projects/ /notes/; do
     code=$(curl -s -m 20 -o "$tmp/page.html" -w '%{http_code}' "$base$p")
     if [ "$code" = 200 ]; then ok "$p → 200 (сертификат принят)"; scan "$tmp/page.html" "$p"; else bad "$p → $code"; fi
@@ -81,15 +82,15 @@ check_url() {
     code=$(curl -s -m 20 -o /dev/null -w '%{http_code}' "http://$host/")
     [ "$code" = 301 ] && ok "http → 301" || bad "http → $code (ждали 301)"
     loc=$(curl -s -m 20 -o /dev/null -w '%{redirect_url}' "https://www.$host/")
-    case "$loc" in https://$host*) ok "www → apex" ;; *) bad "www не ведёт на apex ($loc)" ;; esac
+    case "$loc" in https://$host/*|https://$host) ok "www → apex" ;; *) bad "www не ведёт на apex ($loc)" ;; esac
   fi
   rm -rf "$tmp"
 }
 
 case "${1:-}" in
-  --dist) check_dist "${2:-all}" ;;
+  --dist) case "${2:-all}" in cv|projects|all) check_dist "${2:-all}" ;; *) echo "Неизвестная часть: ${2} (cv|projects|all)"; exit 2 ;; esac ;;
   https://*) check_url "$1" "${2:-}" ;;
-  *) echo "Использование: $0 --dist <cv|projects|all> | $0 <https://url> [--no-domain]"; exit 2 ;;
+  *) echo "Использование: $0 --dist <cv|projects|all> | $0 <https://url> [--no-domain]  (для *.github.io — с --no-domain)"; exit 2 ;;
 esac
 [ $fail = 0 ] && echo "ИТОГ: ok" || echo "ИТОГ: FAIL"
 exit $fail

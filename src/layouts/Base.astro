@@ -6,9 +6,9 @@ const { title, description = 'Максим Егоров — QA Automation Engine
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const nav = [
   { href: '/', label: 'Главная' },
-  { href: '/cv', label: 'CV' },
-  { href: '/projects', label: 'Проекты' },
-  { href: '/notes', label: 'Заметки' },
+  { href: '/cv/', label: 'CV' },
+  { href: '/projects/', label: 'Проекты' },
+  { href: '/notes/', label: 'Заметки' },
 ];
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 const fullTitle = title === 'Максим Егоров' ? title : `${title} — Максим Егоров`;

@@ -12,7 +12,7 @@ const notes = Object.values(import.meta.glob('./*.md', { eager: true }))
   <ul class="note-list">
     {notes.map((n) => (
       <li>
-        <time datetime={String(n.date)}>{new Date(n.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+        <time datetime={new Date(n.date).toISOString().slice(0, 10)}>{new Date(n.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>
         <h3><a href={n.url}>{n.title}</a></h3>
         {n.description && <p class="muted" style="margin:0">{n.description}</p>}
       </li>
