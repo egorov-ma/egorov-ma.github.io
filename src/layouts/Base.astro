@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+
+interface Props { title: string; description?: string; }
+const { title, description = 'Максим Егоров — QA Automation Engineer: автоматизация тестирования, пет-проекты, заметки.' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  { href: '/', label: 'Главная' },
+  { href: '/cv', label: 'CV' },
+  { href: '/projects', label: 'Проекты' },
+  { href: '/notes', label: 'Заметки' },
+];
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const fullTitle = title === 'Максим Егоров' ? title : `${title} — Максим Егоров`;
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">Максим Егоров</a>
+        <nav class="nav" aria-label="Разделы">
+          {nav.map((n) => <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main class="wrap"><slot /></main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <span>© {new Date().getFullYear()} Максим Егоров</span>
+        <span><a href="https://github.com/egorov-ma" rel="me">GitHub</a> · <a href="https://t.me/heapnotes" rel="me">Telegram</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

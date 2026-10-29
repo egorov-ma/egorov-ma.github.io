@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import projects from '../data/projects.json';
+---
+<Base title="Проекты" description="Пет-проекты и примеры автотестов Максима Егорова.">
+  <h1>Проекты</h1>
+  <p class="lead">Пет-проекты, которые довожу до релиза, и наборы автотестов, на которых пробую подходы и инструменты.</p>
+  <div class="cards">
+    {projects.map((p) => (
+      <article class="project-card">
+        <div class="kind">{p.kind}</div>
+        <h3>{p.url ? <a href={p.url}>{p.name}</a> : p.name}</h3>
+        <p>{p.text}</p>
+        <ul class="tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+      </article>
+    ))}
+  </div>
+</Base>

@@ -1,0 +1,14 @@
+{
+  "name": "personal-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "verify": "bash scripts/verify-site.sh --dist cv && bash scripts/verify-site.sh --dist projects"
+  },
+  "dependencies": {
+    "astro": "^7.4.4"
+  }
+}

@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Заметки — markdown-файлы рядом; новые сверху
+const notes = Object.values(import.meta.glob('./*.md', { eager: true }))
+  .map((n: any) => ({ url: n.url, ...n.frontmatter }))
+  .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+---
+<Base title="Заметки" description="Короткие заметки Максима Егорова: пет-проекты, тестирование, домашняя инфраструктура.">
+  <h1>Заметки</h1>
+  <p class="lead">Короткие тексты о пет-проектах, тестировании и домашней инфраструктуре. Длинное и сырое — в <a href="https://t.me/heapnotes">канале</a>.</p>
+  <ul class="note-list">
+    {notes.map((n) => (
+      <li>
+        <time datetime={String(n.date)}>{new Date(n.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+        <h3><a href={n.url}>{n.title}</a></h3>
+        {n.description && <p class="muted" style="margin:0">{n.description}</p>}
+      </li>
+    ))}
+  </ul>
+</Base>
