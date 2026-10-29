@@ -5,10 +5,10 @@ const { frontmatter } = Astro.props;
 const date = new Date(frontmatter.date);
 ---
 <Base title={frontmatter.title} description={frontmatter.description}>
-  <p class="muted"><a href="/notes/">← Заметки</a></p>
+  <p><a class="more" href="/notes/">← Заметки</a></p>
   <article class="prose">
     <h1>{frontmatter.title}</h1>
-    <p class="muted"><time datetime={date.toISOString().slice(0, 10)}>{date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>{frontmatter.source && <> · <a href={frontmatter.source}>оригинал в канале</a></>}</p>
+    <p class="muted note-meta"><time datetime={date.toISOString().slice(0, 10)}>{date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>{frontmatter.source && <> · <a href={frontmatter.source}>оригинал в канале</a></>}</p>
     <slot />
   </article>
 </Base>

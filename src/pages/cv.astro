@@ -48,51 +48,81 @@ const projects = [
   { name: 'СДМ-Банк', text: 'Контроль требований ПОД/ФТ на платформе SuiteCRM: функциональное и регрессионное тестирование.' },
 ];
 
-const stack = ['Java', 'Kotlin', 'SQL', 'JUnit 5', 'TestNG', 'REST Assured', 'Playwright', 'Selenium', 'Selenide', 'Selenoid', 'AssertJ', 'Awaitility', 'WireMock', 'ArchUnit', 'JaCoCo', 'Gradle', 'Maven', 'Kafka', 'JMS', 'Camunda', 'Spring Boot', 'Liquibase', 'PostgreSQL', 'Oracle', 'MS SQL'];
-const tools = ['Jenkins', 'GitLab CI', 'Git', 'Docker', 'Kubernetes / OpenShift', 'Helm', 'Nexus', 'Allure', 'Postman', 'SoapUI', 'Grafana', 'Kibana', 'Prometheus', 'Jira', 'Confluence', 'IntelliJ IDEA'];
+// Стек — те же позиции, что в резюме, разложены по группам
+const stack = [
+  { group: 'Языки', items: ['Java', 'Kotlin', 'SQL'] },
+  { group: 'Тестирование', items: ['JUnit 5', 'TestNG', 'REST Assured', 'Playwright', 'Selenium', 'Selenide', 'Selenoid', 'AssertJ', 'Awaitility', 'WireMock', 'ArchUnit', 'JaCoCo', 'Allure', 'Postman', 'SoapUI'] },
+  { group: 'Платформа и данные', items: ['Spring Boot', 'Kafka', 'JMS', 'Camunda', 'Liquibase', 'PostgreSQL', 'Oracle', 'MS SQL'] },
+  { group: 'CI и инфраструктура', items: ['Jenkins', 'GitLab CI', 'Git', 'Gradle', 'Maven', 'Docker', 'Kubernetes / OpenShift', 'Helm', 'Nexus'] },
+  { group: 'Наблюдаемость и процесс', items: ['Grafana', 'Kibana', 'Prometheus', 'Jira', 'Confluence', 'IntelliJ IDEA'] },
+];
 ---
 <Base title="CV" description="Максим Егоров — Senior QA Automation Engineer / Lead QA: опыт, стек, достижения.">
-  <h1>CV</h1>
-  <p class="lead">Senior QA Automation Engineer / Lead QA. В тестировании с 2017 года, почти всё это время — банковские и страховые проекты на микросервисах.</p>
-  <p>Начинал с ручного функционального тестирования, затем ушёл в автоматизацию на Java. Последние годы совмещаю две роли: лид группы тестирования и автор фреймворка автотестов, который держит их прогоны в CI. Мне интересно понять, как устроена система: разобрать Kafka-поток или BPMN-процесс, найти по логам, где всё пошло не так, и построить покрытие так, чтобы пробелы были видны до релиза.</p>
+  <section class="hero">
+    <p class="eyebrow">CV</p>
+    <h1>Senior QA Automation Engineer / Lead QA</h1>
+    <p class="lead">В тестировании с 2017 года, почти всё это время — банковские и страховые проекты на микросервисах. Совмещаю две роли: лид группы тестирования и автор фреймворка автотестов, который держит их прогоны в CI.</p>
+    <p class="narrow muted">Начинал с ручного функционального тестирования, затем ушёл в автоматизацию на Java. Мне интересно понять, как устроена система: разобрать Kafka-поток или BPMN-процесс, найти по логам, где всё пошло не так, и построить покрытие так, чтобы пробелы были видны до релиза.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://t.me/heapnotes" rel="me">Telegram</a>
+      <a class="btn" href="https://github.com/egorov-ma" rel="me">GitHub</a>
+      <a class="btn" href="/projects/">Проекты</a>
+    </div>
+  </section>
 
   <section id="achievements">
+    <p class="eyebrow">Результаты</p>
     <h2>Достижения</h2>
-    <ul class="points">
-      <li>С нуля построил фреймворк API-автотестов для кредитного страхования, на нём работают шесть команд стрима: больше 1 200 автотестов по 14 микросервисам (REST, Kafka, JMS, Camunda), ночной регресс и точечные прогоны вместо ручного регресса в 3–4 дня.</li>
-      <li>Ввёл карту покрытия «бизнес-процесс → требование → тест»: по ней планируем автоматизацию и показываем заказчику, что реально закрыто. За проект подтверждено больше 140 дефектов.</li>
-      <li>Возглавил команду автоматизации из пяти человек и довёл унаследованный набор Selenium и REST Assured тестов до стабильного ночного регресса в Jenkins и GitLab CI.</li>
-    </ul>
+    <div class="grid grid-3">
+      <div class="card metric"><b>1 200+</b><p>С нуля построил фреймворк API-автотестов для кредитного страхования, на нём работают шесть команд стрима: автотесты по 14 микросервисам (REST, Kafka, JMS, Camunda), ночной регресс и точечные прогоны вместо ручного регресса в 3–4 дня.</p></div>
+      <div class="card metric"><b>140+</b><p>Ввёл карту покрытия «бизнес-процесс → требование → тест»: по ней планируем автоматизацию и показываем заказчику, что реально закрыто. За проект подтверждено больше 140 дефектов.</p></div>
+      <div class="card metric"><b>5</b><p>Возглавил команду автоматизации из пяти человек и довёл унаследованный набор Selenium и REST Assured тестов до стабильного ночного регресса в Jenkins и GitLab CI.</p></div>
+    </div>
   </section>
 
   <section id="experience">
+    <p class="eyebrow">Карьера</p>
     <h2>Опыт</h2>
-    {jobs.map((j) => (
-      <article class="job">
-        <div class="job-head"><h3>{j.role}</h3><span class="job-meta">{j.period}</span></div>
-        <div class="muted">{j.org}</div>
-        <ul class="points">{j.points.map((p) => <li>{p}</li>)}</ul>
-      </article>
-    ))}
-    <h3 style="margin-top:24px">Проекты</h3>
-    {projects.map((p) => (
-      <article class="job">
-        <div class="job-head"><h3>{p.name}</h3>{p.note && <span class="job-meta">{p.note}</span>}</div>
-        <p class="muted" style="margin:6px 0 0">{p.text}</p>
-      </article>
-    ))}
+    <ol class="timeline">
+      {jobs.map((j) => (
+        <li>
+          <div class="job-head"><h3>{j.role}</h3><span class="job-meta">{j.period}</span></div>
+          <div class="org">{j.org}</div>
+          <ul class="points">{j.points.map((p) => <li>{p}</li>)}</ul>
+        </li>
+      ))}
+    </ol>
+    <h3 style="margin-top:40px">Проекты</h3>
+    <div class="engagements">
+      {projects.map((p) => (
+        <div class="engagement">
+          <h4>{p.name}{p.note && <span class="badge">{p.note}</span>}</h4>
+          <p>{p.text}</p>
+        </div>
+      ))}
+    </div>
   </section>
 
   <section id="stack">
+    <p class="eyebrow">Инструменты</p>
     <h2>Стек</h2>
-    <ul class="tags">{stack.map((s) => <li>{s}</li>)}</ul>
-    <h3 style="margin-top:18px">Инструменты</h3>
-    <ul class="tags">{tools.map((s) => <li>{s}</li>)}</ul>
+    <div class="grid grid-2">
+      {stack.map((g) => (
+        <div class="stack-group">
+          <h3>{g.group}</h3>
+          <ul class="tags">{g.items.map((s) => <li>{s}</li>)}</ul>
+        </div>
+      ))}
+    </div>
   </section>
 
   <section id="education">
+    <p class="eyebrow">Обучение</p>
     <h2>Образование</h2>
-    <p>Саратовский государственный университет им. Н. Г. Чернышевского, 2016. Факультет компьютерных наук и информационных технологий, «Математическое обеспечение и администрирование информационных систем».</p>
-    <p class="muted">Курсы: «Лидерство в команде» (2019), «Java для тестировщиков» (2019). Английский — B1: техническая документация и деловая переписка.</p>
+    <div class="card">
+      <h3>Саратовский государственный университет им. Н. Г. Чернышевского, 2016</h3>
+      <p>Факультет компьютерных наук и информационных технологий, «Математическое обеспечение и администрирование информационных систем».</p>
+      <p class="muted" style="margin-top:10px">Курсы: «Лидерство в команде» (2019), «Java для тестировщиков» (2019). Английский — B1: техническая документация и деловая переписка.</p>
+    </div>
   </section>
 </Base>

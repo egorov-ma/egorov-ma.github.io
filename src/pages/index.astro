@@ -1,17 +1,86 @@
 ---
 import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import projects from '../data/projects.json';
+
+// Цифры — из раздела «Достижения» CV, другие источники не используются
+const stats = [
+  { value: '1 200+', label: 'автотестов на моём фреймворке' },
+  { value: '14', label: 'микросервисов в покрытии' },
+  { value: '6', label: 'команд работают на фреймворке' },
+  { value: '140+', label: 'подтверждённых дефектов' },
+];
+const strengths = [
+  { icon: '</>', title: 'Фреймворки автотестов', text: 'Java, JUnit 5, REST Assured, WireMock, Kafka, Playwright. Проектирую с нуля или довожу унаследованные наборы до стабильного регресса и встраиваю прогоны в Jenkins и GitLab CI.' },
+  { icon: '%', title: 'Покрытие, которое видно', text: 'Карта «бизнес-процесс → требование → тест» и полнота по JaCoCo: по ней планируем автоматизацию и показываем заказчику, что реально закрыто.' },
+  { icon: '↗', title: 'Лидерство в тестировании', text: 'Веду группу тестирования, руководил командой автоматизации из пяти инженеров, ввожу новых людей в проект и готовлю отчёты для релизных решений.' },
+];
+const featured = projects.filter((p) => p.featured);
+const latest = Object.values(import.meta.glob('./notes/*.md', { eager: true }))
+  .map((n: any) => ({ url: n.url, ...n.frontmatter }))
+  .sort((a, b) => +new Date(b.date) - +new Date(a.date))[0];
+const fmt = (d: string) => new Date(d).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
 <Base title="Максим Егоров">
-  <h1>Максим Егоров</h1>
-  <p class="lead">Senior QA Automation Engineer и лид группы тестирования. В тестировании с 2017 года, в основном — банковские и страховые системы на микросервисах.</p>
-  <p>Проектирую фреймворки автотестов на Java, встраиваю прогоны в CI и строю покрытие так, чтобы пробелы были видны до релиза, а не после. В свободное время довожу до релиза пет-проекты и настраиваю домашнюю инфраструктуру.</p>
-  <ul class="links">
-    <li><a href="https://t.me/heapnotes" rel="me">Telegram · HeapNotes</a></li>
-    <li><a href="https://github.com/egorov-ma" rel="me">GitHub</a></li>
-  </ul>
-  <div class="tiles">
-    <a class="tile" href="/cv/">CV<span>Опыт, стек и достижения</span></a>
-    <a class="tile" href="/projects/">Проекты<span>Пет-проекты и примеры автотестов</span></a>
-    <a class="tile" href="/notes/">Заметки<span>Короткие тексты о том, чем готов делиться</span></a>
-  </div>
+  <section class="hero">
+    <p class="eyebrow">Senior QA Automation · Lead QA</p>
+    <h1 class="display">Максим Егоров</h1>
+    <p class="lead">Строю автотесты и покрытие, на которые опирается решение о релизе. В тестировании с 2017 года — банковские и страховые системы на микросервисах.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/cv/">Смотреть CV</a>
+      <a class="btn" href="/projects/">Проекты</a>
+      <a class="btn" href="https://t.me/heapnotes" rel="me">Telegram</a>
+      <a class="btn" href="https://github.com/egorov-ma" rel="me">GitHub</a>
+    </div>
+    <div class="stats">
+      {stats.map((s) => <div class="stat"><b>{s.value}</b><span>{s.label}</span></div>)}
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Чем полезен</p>
+    <h2>Автоматизация, покрытие и команда</h2>
+    <div class="grid grid-3">
+      {strengths.map((s) => (
+        <div class="card">
+          <span class="icon" aria-hidden="true">{s.icon}</span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><p class="eyebrow">Проекты</p><h2>Избранное</h2></div>
+      <a class="more" href="/projects/">Все проекты →</a>
+    </div>
+    <div class="grid grid-3">
+      {featured.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  {latest && (
+    <section>
+      <div class="section-head">
+        <div><p class="eyebrow">Заметки</p><h2>Свежее</h2></div>
+        <a class="more" href="/notes/">Все заметки →</a>
+      </div>
+      <a class="card note-teaser" href={latest.url}>
+        <time datetime={new Date(latest.date).toISOString().slice(0, 10)}>{fmt(latest.date)}</time>
+        <h3 style="margin-top:6px">{latest.title}</h3>
+        {latest.description && <p>{latest.description}</p>}
+      </a>
+    </section>
+  )}
+
+  <section class="cta">
+    <h2>Где меня найти</h2>
+    <p>Пишу о пет-проектах, тестировании и домашней инфраструктуре в канале HeapNotes. Код пет-проектов и примеров автотестов — на GitHub.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://t.me/heapnotes" rel="me">Канал в Telegram</a>
+      <a class="btn" href="https://github.com/egorov-ma" rel="me">GitHub</a>
+    </div>
+  </section>
 </Base>

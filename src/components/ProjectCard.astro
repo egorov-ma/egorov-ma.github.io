@@ -1,0 +1,13 @@
+---
+interface Props {
+  project: { kind: string; name: string; url: string | null; text: string; tags: string[]; post?: string; featured?: boolean };
+}
+const { project: p } = Astro.props;
+---
+<article class="project-card" data-featured={p.featured ? '' : undefined}>
+  <span class="kind">{p.kind}</span>
+  <h3>{p.url ? <a href={p.url}>{p.name}</a> : p.name}</h3>
+  <p>{p.text}</p>
+  <ul class="tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+  {p.post && <div class="foot"><a class="more" href={p.post}>Пост в канале →</a></div>}
+</article>

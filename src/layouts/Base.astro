@@ -29,7 +29,7 @@ const fullTitle = title === 'Максим Егоров' ? title : `${title} — 
   <body>
     <header class="site-header">
       <div class="wrap">
-        <a class="brand" href="/">Максим Егоров</a>
+        <a class="brand" href="/" aria-label="Максим Егоров — главная"><i aria-hidden="true">МЕ</i><span>Максим Егоров</span></a>
         <nav class="nav" aria-label="Разделы">
           {nav.map((n) => <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>)}
         </nav>
@@ -38,8 +38,8 @@ const fullTitle = title === 'Максим Егоров' ? title : `${title} — 
     <main class="wrap"><slot /></main>
     <footer class="site-footer">
       <div class="wrap">
-        <span>© {new Date().getFullYear()} Максим Егоров</span>
-        <span><a href="https://github.com/egorov-ma" rel="me">GitHub</a> · <a href="https://t.me/heapnotes" rel="me">Telegram</a></span>
+        <span>© {new Date().getFullYear()} Максим Егоров · QA Automation</span>
+        <span><a href="https://t.me/heapnotes" rel="me">Telegram · HeapNotes</a> · <a href="https://github.com/egorov-ma" rel="me">GitHub</a></span>
       </div>
     </footer>
   </body>

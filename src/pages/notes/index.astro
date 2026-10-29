@@ -7,14 +7,19 @@ const notes = Object.values(import.meta.glob('./*.md', { eager: true }))
   .sort((a, b) => +new Date(b.date) - +new Date(a.date));
 ---
 <Base title="Заметки" description="Короткие заметки Максима Егорова: пет-проекты, тестирование, домашняя инфраструктура.">
-  <h1>Заметки</h1>
-  <p class="lead">Короткие тексты о пет-проектах, тестировании и домашней инфраструктуре. Длинное и сырое — в <a href="https://t.me/heapnotes">канале</a>.</p>
-  <ul class="note-list">
+  <section class="hero">
+    <p class="eyebrow">Заметки</p>
+    <h1>Короткие тексты</h1>
+    <p class="lead">О пет-проектах, тестировании и домашней инфраструктуре. Длинное и сырое — в <a href="https://t.me/heapnotes">канале</a>.</p>
+  </section>
+  <ul class="note-list narrow">
     {notes.map((n) => (
       <li>
-        <time datetime={new Date(n.date).toISOString().slice(0, 10)}>{new Date(n.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>
-        <h3><a href={n.url}>{n.title}</a></h3>
-        {n.description && <p class="muted" style="margin:0">{n.description}</p>}
+        <a class="card" href={n.url}>
+          <time datetime={new Date(n.date).toISOString().slice(0, 10)}>{new Date(n.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>
+          <h3 style="margin-top:6px">{n.title}</h3>
+          {n.description && <p>{n.description}</p>}
+        </a>
       </li>
     ))}
   </ul>
