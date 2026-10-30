@@ -25,7 +25,7 @@ const fmt = (d: string) => new Date(d).toLocaleDateString('ru-RU', { day: 'numer
   <section class="hero">
     <p class="eyebrow">Senior QA Automation · Lead QA</p>
     <h1 class="display">Максим Егоров</h1>
-    <p class="lead">Строю автотесты и покрытие, на которые опирается решение о релизе. В тестировании с 2017 года — банковские и страховые системы на микросервисах.</p>
+    <p class="lead">Строю <span class="mark">автотесты и покрытие, на которые опирается решение о релизе</span>. В тестировании с 2017 года — банковские и страховые системы на микросервисах.</p>
     <div class="actions">
       <a class="btn btn-primary" href="/cv/">Смотреть CV</a>
       <a class="btn" href="/projects/">Проекты</a>
@@ -38,7 +38,7 @@ const fmt = (d: string) => new Date(d).toLocaleDateString('ru-RU', { day: 'numer
   </section>
 
   <section>
-    <p class="eyebrow">Чем полезен</p>
+    <p class="eyebrow"><span>01</span>Чем полезен</p>
     <h2>Автоматизация, покрытие и команда</h2>
     <div class="grid grid-3">
       {strengths.map((s) => (
@@ -53,7 +53,7 @@ const fmt = (d: string) => new Date(d).toLocaleDateString('ru-RU', { day: 'numer
 
   <section>
     <div class="section-head">
-      <div><p class="eyebrow">Проекты</p><h2>Избранное</h2></div>
+      <div><p class="eyebrow"><span>02</span>Проекты</p><h2>Избранное</h2></div>
       <a class="more" href="/projects/">Все проекты →</a>
     </div>
     <div class="grid grid-3">
@@ -64,7 +64,7 @@ const fmt = (d: string) => new Date(d).toLocaleDateString('ru-RU', { day: 'numer
   {latest && (
     <section>
       <div class="section-head">
-        <div><p class="eyebrow">Заметки</p><h2>Свежее</h2></div>
+        <div><p class="eyebrow"><span>03</span>Заметки</p><h2>Свежее</h2></div>
         <a class="more" href="/notes/">Все заметки →</a>
       </div>
       <a class="card note-teaser" href={latest.url}>

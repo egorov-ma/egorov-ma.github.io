@@ -8,6 +8,11 @@ const groups = [
   { id: 'tests', title: 'Автотесты', text: 'Наборы автотестов: UI, API и мобильные, с CI и отчётами.' },
   { id: 'lab', title: 'Инфраструктура и эксперименты', text: 'Домашний стенд и проверка новых инструментов.' },
 ];
+const plural = (n: number) => {
+  const m10 = n % 10, m100 = n % 100;
+  const word = m10 === 1 && m100 !== 11 ? 'проект' : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 'проекта' : 'проектов';
+  return `${n} ${word}`;
+};
 ---
 <Base title="Проекты" description="Пет-проекты и примеры автотестов Максима Егорова.">
   <section class="hero">
@@ -15,10 +20,11 @@ const groups = [
     <h1>Пет-проекты и автотесты</h1>
     <p class="lead">Пет-проекты, которые довожу до релиза, и наборы автотестов, на которых пробую подходы и инструменты. Код пет-проектов и автотестов — на GitHub.</p>
   </section>
-  {groups.map((g) => (
+  {groups.map((g, i) => (
     <section id={g.id}>
-      <div class="section-head"><h2>{g.title}</h2></div>
-      <p class="muted" style="margin-top:-8px">{g.text}</p>
+      <p class="eyebrow"><span>{String(i + 1).padStart(2, '0')}</span>{plural(projects.filter((p) => p.group === g.id).length)}</p>
+      <h2>{g.title}</h2>
+      <p class="muted" style="margin-top:-12px">{g.text}</p>
       <div class="grid grid-2">
         {projects.filter((p) => p.group === g.id).map((p) => <ProjectCard project={p} />)}
       </div>

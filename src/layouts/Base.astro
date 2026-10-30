@@ -18,6 +18,7 @@ const fullTitle = title === 'Максим Егоров' ? title : `${title} — 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -38,8 +39,12 @@ const fullTitle = title === 'Максим Егоров' ? title : `${title} — 
     <main class="wrap"><slot /></main>
     <footer class="site-footer">
       <div class="wrap">
-        <span>© {new Date().getFullYear()} Максим Егоров · QA Automation</span>
-        <span><a href="https://t.me/heapnotes" rel="me">Telegram · HeapNotes</a> · <a href="https://github.com/egorov-ma" rel="me">GitHub</a></span>
+        <span class="who">Максим Егоров</span>
+        <span class="socials">
+          <a href="https://t.me/heapnotes" rel="me" aria-label="Telegram: heapnotes"><i aria-hidden="true">tg</i>heapnotes</a>
+          <a href="https://github.com/egorov-ma" rel="me" aria-label="GitHub: egorov-ma"><i aria-hidden="true">gh</i>egorov-ma</a>
+        </span>
+        <span class="muted">© {new Date().getFullYear()}</span>
       </div>
     </footer>
   </body>
