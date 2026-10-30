@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "verify": "bash scripts/verify-site.sh --dist cv && bash scripts/verify-site.sh --dist projects"
+    "verify": "bash scripts/verify-site.sh --dist cv && bash scripts/verify-site.sh --dist projects && python3 scripts/contrast-check.py"
   },
   "dependencies": {
     "astro": "^7.4.4"

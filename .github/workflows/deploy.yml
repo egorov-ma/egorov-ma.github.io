@@ -27,6 +27,8 @@ jobs:
       - run: npm run build
       - name: Проверка сборки
         run: bash scripts/verify-site.sh --dist all
+      - name: Контраст палитры (WCAG 2 и APCA)
+        run: python3 scripts/contrast-check.py
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

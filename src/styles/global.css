@@ -1,9 +1,11 @@
 /* Тёмный стиль: чистый чёрный фон, синие свечения по краям, белые заголовки с синей чертой.
-   Светлой темы нет — решение 2026-10-30 по референсу владельца сайта */
+   Светлой темы нет — решение 2026-10-30 по референсу владельца сайта.
+   Цвета текста подобраны по APCA, а не только по WCAG 2: светлое на тёмном требует большего запаса.
+   Проверка — scripts/contrast-check.py */
 :root {
-  --bg: #000000; --bg-2: #05070c; --surface: rgb(255 255 255 / 0.015); --ink: #ffffff; --ink-2: #c8ccd4; --muted: #8d929c;
-  --line: #2a2d34; --edge: #60646e; --accent: #4f7dff; --accent-ink: #ffffff; --accent-soft: rgb(79 125 255 / 0.14);
-  --link: #a9b4ff; --tag: rgb(255 255 255 / 0.06); --glow: rgb(28 58 255 / 0.55);
+  --bg: #000000; --bg-2: #05070c; --surface: rgb(255 255 255 / 0.015); --ink: #ffffff; --ink-2: #d3d7dd; --muted: #bcbfc4;
+  --line: #2a2d34; --edge: #60646e; --accent: #7398ff; --accent-ink: #ffffff; --accent-soft: rgb(79 125 255 / 0.14);
+  --btn: #3461ee; --btn-hover: #2d58dc; --link: #c0c8ff; --tag: rgb(255 255 255 / 0.06); --glow: rgb(28 58 255 / 0.45);
   --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --r: 20px;
@@ -20,7 +22,7 @@ body { margin: 0; min-height: 100vh; color: var(--ink); font: 17px/1.7 var(--fon
 a { color: var(--link); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--link) 45%, transparent); text-underline-offset: 3px; }
 a:hover { text-decoration-color: var(--link); }
 a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-::selection { background: var(--accent); color: #fff; }
+::selection { background: var(--btn); color: #fff; }
 
 /* Сетка: широкая для лендинга, узкая для чтения */
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
@@ -53,9 +55,9 @@ p { margin: 0 0 14px; }
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: 0.98rem;
   border: 1px solid var(--edge); background: transparent; color: var(--ink); text-decoration: none; transition: border-color .15s, background .15s; }
 .btn:hover { border-color: var(--ink-2); background: var(--tag); }
-/* Кнопка темнее акцента: белый на #4f7dff даёт 3.7:1, ниже AA */
-.btn-primary { background: #3461ee; border-color: #3461ee; color: var(--accent-ink); }
-.btn-primary:hover { background: #2d58dc; border-color: #2d58dc; }
+/* Белый текст — только на --btn: на светлом --accent белый даёт меньше 3:1 */
+.btn-primary { background: var(--btn); border-color: var(--btn); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--btn-hover); border-color: var(--btn-hover); }
 .more { font-weight: 600; white-space: nowrap; color: var(--link); text-decoration: none; }
 .more:hover { text-decoration: underline; }
 
@@ -73,7 +75,7 @@ a.card:hover { border-color: var(--accent); background: var(--accent-soft); }
 /* Метки */
 .tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 14px 0 0; list-style: none; }
 .tags li { background: var(--tag); color: var(--ink-2); border: 1px solid var(--line); border-radius: 6px; padding: 1px 9px; font-size: 0.84rem; }
-.kind { display: inline-block; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.kind { display: inline-block; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 
 /* Главная: hero, цифры, контакт */
 .hero { padding: 32px 0 8px; }
@@ -103,7 +105,7 @@ ul.points li::marker, ol li::marker { color: var(--accent); }
 .engagement { border: 1px solid var(--edge); border-radius: 16px; padding: 16px 18px; background: var(--surface); }
 .engagement h4 { margin: 0 0 4px; font-size: 1rem; display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; color: var(--ink); }
 .engagement p { margin: 0; color: var(--muted); font-size: 0.96rem; }
-.badge { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--link); background: var(--accent-soft); border-radius: 999px; padding: 1px 8px; }
+.badge { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--link); background: var(--accent-soft); border-radius: 999px; padding: 1px 8px; }
 .stack-group h3 { font-size: 0.95rem; color: var(--muted); font-weight: 600; margin-bottom: 0; }
 
 /* Проекты */
@@ -130,7 +132,7 @@ ul.points li::marker, ol li::marker { color: var(--accent); }
   background: rgb(0 0 0 / 0.72); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; flex-wrap: wrap; }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; text-decoration: none; }
-.brand i { font-style: normal; display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 0.78rem; font-weight: 780; }
+.brand i { font-style: normal; display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: var(--btn); color: #fff; font-size: 0.78rem; font-weight: 780; }
 .nav { display: flex; gap: 2px; flex-wrap: wrap; }
 .nav a { color: var(--ink-2); padding: 7px 12px; border-radius: 10px; font-size: 0.95rem; text-decoration: none; position: relative; }
 .nav a:hover { color: var(--ink); background: var(--tag); }
@@ -142,7 +144,7 @@ ul.points li::marker, ol li::marker { color: var(--accent); }
 .site-footer .socials { display: flex; gap: 18px; flex-wrap: wrap; }
 .site-footer .socials a { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); text-decoration: none; }
 .site-footer .socials a:hover { color: var(--ink); }
-.site-footer .socials i { font-style: normal; display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 4px; background: var(--accent); color: #fff; font-size: 0.62rem; font-weight: 800; }
+.site-footer .socials i { font-style: normal; display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 4px; background: var(--btn); color: #fff; font-size: 0.62rem; font-weight: 800; }
 
 @media (max-width: 560px) {
   body { font-size: 16px; }
